@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AsilShop - Bosh sahifa</title>
+  <style>
+    :root {
+      --primary: #2d6cdf;
+      --light: #f9f9f9;
+      --dark: #333;
+      --accent: #4cd964;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      color: var(--dark);
+      background-color: var(--light);
+    }
+
+    header {
+      background: rgba(255,255,255,0.95);
+      padding: 20px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    nav h2 {
+      color: var(--primary);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1607083206962-5e6d1f78b1e5?auto=format&fit=crop&w=1600&q=80') no-repeat center center / cover;
+      height: 65vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      z-index: 2;
+      position: relative;
+      max-width: 700px;
+      padding: 0 20px;
+    }
+
+    .profile-menu {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px 15px;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+
+    .profile-menu a {
+      text-decoration: none;
+      color: #333;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      transition: 0.3s;
+    }
+
+    .profile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .profile-menu a:hover {
+      color: var(--primary);
+    }
+
+    .hamburger {
+      width: 25px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+    .hamburger span {
+      height: 3px;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    footer {
+      background: url('https://images.unsplash.com/photo-1606851091891-3169f94b1783?auto=format&fit=crop&w=1600&q=80') no-repeat center center / cover;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    footer p {
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .profile-menu {
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <h2>AsilShop</h2>
+
+        <ul>
+          <li><a href="{% url 'home'%}">Bosh sahifa</a></li>
+          <li><a href="{% url 'category_list' %}">Kategoriyalar</a></li>
+          <li><a href="{% url 'contact'%}">Aloqa</a></li>
+        </ul>
+
+        <!-- Hamburger & Profil menyu -->
+        <div style="position: relative;">
+          <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="profile-menu" id="profileMenu">
+            {% if user.is_authenticated %}
+              <a href="{% url 'user' %}">👤 {{ user.username }}</a>
+              <a href="{% url 'profile' %}">Profil</a>
+              <a href="{% url 'logout' %}">Chiqish</a>
+
+            {% else %}
+              <a href="{% url 'login' %}">Kirish</a>
+              <a href="{% url 'register' %}">Ro'yxatdan o'tish</a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Asil shopga xush kelibsiz! Eng yaxshi mahsulotlar bir joyda!</h1>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 AsilShop. Barcha huquqlar himoyalangan.</p>
+  </footer>
+
+  <!-- JavaScript: menyu ochib-yopish -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('profileMenu');
+
+    hamburger.addEventListener('click', () => {
+      menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!hamburger.contains(event.target) && !menu.contains(event.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<style>
+.messages {
+    margin-bottom: 20px;
+}
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.alert.success {
+    background-color: #28a745;
+}
+.alert.error {
+    background-color: #dc3545;
+}
+.alert.info {
+    background-color: #17a2b8;
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Komentni o‘chirish</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff3f3;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #c82333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button, .cancel-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+        }
+
+        button {
+            background-color: #dc3545;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+
+        .cancel-btn {
+            background-color: #6c757d;
+            text-decoration: none;
+        }
+
+        .cancel-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Komentni o‘chirish</h2>
+        <p>"{{ comment.text }}" kommentni o‘chirmoqchimisiz?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">🗑 Ha, o‘chir</button>
+            <a href="{% url 'detail' comment.news.id %}" class="cancel-btn">Bekor qilish</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ category.name }} yangiliklari</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .search-form {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-right: 10px;
+        }
+
+        .search-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .search-form button:hover {
+            background-color: #218838;
+        }
+
+        .card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.01);
+        }
+
+        .card img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .card-meta {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .card-price {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .no-news, .no-results {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .links a {
+            margin: 0 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<form method="get">
+    <input type="text" name="n" placeholder="Qidirish nomi" value="{{ request.GET.n }}">
+    <input type="text" name="p" placeholder="Qidirish price" value="{{ request.GET.p }}">
+    <button type="submit">Qidirish</button>
+</form>
+
+
+{% for cat in categories %}
+    <div>
+        <strong>{{ cat.name }}</strong>
+        {% if cat.price %}
+            - {{ cat.price }} so'm
+        {% endif %}
+    </div>
+{% empty %}
+    <p>Hech qanday kategoriya topilmadi.</p>
+{% endfor %}
+    <div class="container">
+        <h2>{{ category.name }} Ro'yxatlar</h2>
+
+        {% for item in news %}
+            <div class="card">
+                <img src="{{ item.image.url }}" alt="Yangilik rasmi">
+                <div class="card-content">
+                    <div class="card-title">{{ item.title }}</div>
+                    <div class="card-meta">
+                        Qo‘shilgan: {{ item.created_at|date:"Y-m-d" }}<br>
+                        Muallif: {{ item.user }}
+                    </div>
+                    {% if item.price %}
+                        <div class="card-price">Narxi: {{ item.price }} so‘m</div>
+                    {% endif %}
+
+                    <a href="{% url 'detail' item.id %}" class="btn">Batafsil</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="no-news">
+                Bu kategoriyada hech qanday yangilik yo‘q.
+            </div>
+        {% endfor %}
+
+        <div class="links">
+            <a href="{% url 'post_create' %}">➕ Post qo'shish</a>
+            <a href="{% url 'category_list' %}">⬅ Ro'yxatga qaytish</a>
+            <a href="{% url 'home' %}">🏠 Bosh sahifaga qaytish</a>
+        </div>
+    </div>
+</body>
+</html>
