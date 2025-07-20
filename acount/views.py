@@ -67,7 +67,7 @@ def change_pass_view(request):
             user.save()
             messages.success(request, 'Parolingiz o‘zgartirildi')
             return redirect('profile')
-        
+        return render(request, 'change_pass.html')
 
 
 

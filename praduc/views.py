@@ -38,20 +38,7 @@ def category_list(request):
     return render(request,'category-list.html', {'categories': categories, 'a': a})
 
 
-# def category_list(request):
-#     query = request.GET.get('q', '')
 
-#     if query:
-#         categories = Category.objects.filter(
-#             Q(title__icontains=query)
-#         )
-#     else:
-#         categories = Category.objects.all()
-
-#     return render(request, 'category-list.html', {
-#         'categories': categories,
-#         'query': query, 
-#     })
 
 @login_required(login_url='login')
 def category(request, pk):
